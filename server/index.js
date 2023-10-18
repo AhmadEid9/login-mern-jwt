@@ -1,25 +1,29 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import bcrypt from 'bcrypt';
-import body from 'body-parser';
-import jwt from 'jsonwebtoken';
 import { PORT, mongoDBURL } from "./config.js";
-
-
-
 
 const app = express()
 
+app.use(express.json())
 
-mongoose.connect(mongoDBURL).then(() => {
+app.use(cors(
+    {
+        origin: 'http://localhost:5173/',
+        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        allowedHeaders: ['Contetnt-type'],
+    }
+))
+
+mongoose.connect(mongoDBURL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => {
     console.log("App connected to database");
     
     app.listen(PORT, () => {
         console.log(`App listening to port: ${PORT}`);
-    });
-
-    
+    });    
     
 }).catch((err) => {
     console.log(err);
