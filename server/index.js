@@ -2,12 +2,13 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import { PORT, mongoDBURL } from "./config.js";
+import bodyParser from 'body-parser';
 
 import authRoute from './routes/authRoute.js';
 
 const app = express();
 
-app.use(express.json());
+app.use(bodyParser.json());
 
 app.use(cors(
     // {
